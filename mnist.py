@@ -15,15 +15,15 @@ def _dataset(root: str, split: str) -> MNIST:
 
 
 def train(root: str = "data") -> list[torch.Tensor]:
-    """Return a list of 10 image tensors from the MNIST training split."""
+    """Return all MNIST training images as tensors."""
     dataset = _dataset(root=root, split="train")
-    return [dataset[idx][0] for idx in range(10)]
+    return [image_tensor for image_tensor, _label in dataset]
 
 
 def test(root: str = "data") -> list[torch.Tensor]:
-    """Return a list of 10 image tensors from the MNIST test split."""
+    """Return all MNIST test images as tensors."""
     dataset = _dataset(root=root, split="test")
-    return [dataset[idx][0] for idx in range(10)]
+    return [image_tensor for image_tensor, _label in dataset]
 
 
 def generate_all_images(root: str = "data", split: str = "train") -> Path:
