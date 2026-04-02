@@ -1,4 +1,4 @@
-"""Utilities for downloading MNIST and working with image tensors."""
+"""Utilities for downloading MNIST and working with labeled image tensors."""
 
 from pathlib import Path
 
@@ -14,16 +14,16 @@ def _dataset(root: str, split: str) -> MNIST:
     return MNIST(root=root, train=(split == "train"), download=True, transform=ToTensor())
 
 
-def train(root: str = "data") -> list[torch.Tensor]:
-    """Return all MNIST training images as tensors."""
+def train(root: str = "data") -> list[tuple[torch.Tensor, int]]:
+    """Return all MNIST training samples as (image_tensor, label) tuples."""
     dataset = _dataset(root=root, split="train")
-    return [image_tensor for image_tensor, _label in dataset]
+    return [(image_tensor, int(label)) for image_tensor, label in dataset]
 
 
-def test(root: str = "data") -> list[torch.Tensor]:
-    """Return all MNIST test images as tensors."""
+def test(root: str = "data") -> list[tuple[torch.Tensor, int]]:
+    """Return all MNIST test samples as (image_tensor, label) tuples."""
     dataset = _dataset(root=root, split="test")
-    return [image_tensor for image_tensor, _label in dataset]
+    return [(image_tensor, int(label)) for image_tensor, label in dataset]
 
 
 def generate_all_images(root: str = "data", split: str = "train") -> Path:

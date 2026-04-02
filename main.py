@@ -8,14 +8,18 @@ from mnist import test, train
 def main() -> None:
     # Students can edit this section to customize their workflow.
     print(f"Using torch version: {torch.__version__}")
-    train_images = train(root="data")
-    test_images = test(root="data")
+    train_samples = train(root="data")
+    test_samples = test(root="data")
 
     # Return format note:
-    # - train_images/test_images are `list[torch.Tensor]`
-    # - each tensor is a single MNIST image with shape [1, 28, 28]
-    # - pixel values are normalized to [0.0, 1.0] by ToTensor
-    print(f"Loaded {len(train_images)} train image tensors and {len(test_images)} test image tensors.")
+    # - train_samples/test_samples are `list[tuple[torch.Tensor, int]]`
+    # - each item is `(image_tensor, label)`
+    # - image tensor shape is [1, 28, 28], pixel values are [0.0, 1.0]
+    first_image, first_label = train_samples[0]
+    print(
+        f"Loaded {len(train_samples)} train samples and {len(test_samples)} test samples. "
+        f"First train label: {first_label}, image shape: {tuple(first_image.shape)}"
+    )
 
 
 if __name__ == "__main__":
